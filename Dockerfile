@@ -1,21 +1,22 @@
 FROM matrixdotorg/synapse:v1.31.0
 
-RUN mkdir -p /data
+RUN mkdir -p /data /config
 RUN SYNAPSE_SERVER_NAME=my.matrix.host SYNAPSE_REPORT_STATS=no /start.py generate && \
-    mv /data/homeserver.yaml /homeserver.template.yaml
+    mv /data/homeserver.yaml /config/homeserver.template.yaml
 # Couldn't find a way to auto-generate the container flavor of this config, so just copy it in.
-COPY ./log.template.config /log.template.config
+COPY ./log.template.config /config/log.template.config
 
 COPY --from=johnstarich/env2config:v0.1.2 /env2config /
 ENV E2C_CONFIGS=config,log
 
-ENV LOG_OPTS_FILE=/data/log.config
+ENV LOG_OPTS_FILE=/config/log.config
 ENV LOG_OPTS_FORMAT=yaml
-ENV LOG_OPTS_TEMPLATE_FILE=/log.template.config
+ENV LOG_OPTS_TEMPLATE_FILE=/config/log.template.config
 
-ENV CONFIG_OPTS_FILE=/data/homeserver.yaml
+ENV SYNAPSE_CONFIG_PATH=/config/homeserver.yaml
+ENV CONFIG_OPTS_FILE=/config/homeserver.yaml
 ENV CONFIG_OPTS_FORMAT=yaml
-ENV CONFIG_OPTS_TEMPLATE_FILE=/homeserver.template.yaml
+ENV CONFIG_OPTS_TEMPLATE_FILE=/config/homeserver.template.yaml
 ENV CONFIG_OPTS_IN_server_name=SERVER_NAME
 # Set postgres DB as default, require setup params
 ENV CONFIG_database.name=psycopg2
@@ -27,7 +28,7 @@ ENV CONFIG_database.args.keepalives_idle=10
 ENV CONFIG_database.args.keepalives_interval=10
 ENV CONFIG_database.args.keepalives_count=3
 # Override defaults that used fake hostname
-ENV CONFIG_log_config=/data/log.config
+ENV CONFIG_log_config=/config/log.config
 ENV CONFIG_OPTS_IN_signing_key_path=SIGNING_KEY_FILE
 # Require each secret. These must be provided to override generated template values.
 ENV CONFIG_OPTS_IN_registration_shared_secret=REGISTRATION_SHARED_SECRET
