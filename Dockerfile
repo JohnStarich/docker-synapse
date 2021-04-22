@@ -1,6 +1,6 @@
 FROM matrixdotorg/synapse:v1.31.0
 
-RUN mkdir /data
+RUN mkdir -p /data
 RUN SYNAPSE_SERVER_NAME=my.matrix.host SYNAPSE_REPORT_STATS=no /start.py generate && \
     mv /data/homeserver.yaml /homeserver.template.yaml
 # Couldn't find a way to auto-generate the container flavor of this config, so just copy it in.
