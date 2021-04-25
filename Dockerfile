@@ -1,5 +1,12 @@
 FROM matrixdotorg/synapse:v1.31.0
 
+# Install shared_secret_auth, which can be enabled if desired
+RUN apt-get update && \
+    apt-get install -y git && \
+    apt-get clean autoclean && \
+    rm -rf /var/lib/apt/* /var/lib/cache/* /var/lib/log/*
+RUN pip install git+https://github.com/devture/matrix-synapse-shared-secret-auth
+
 RUN mkdir -p /data /config
 RUN SYNAPSE_SERVER_NAME=my.matrix.host SYNAPSE_REPORT_STATS=no /start.py generate && \
     mv /data/homeserver.yaml /config/homeserver.template.yaml
