@@ -1,8 +1,0 @@
-language: bash
-
-services:
-  - docker
-
-jobs:
-  include:
-    - script: docker build -t johnstarich/synapse:latest .
