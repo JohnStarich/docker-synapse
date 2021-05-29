@@ -23,7 +23,7 @@ version: "3.4"
 
 services:
   synapse:
-    image: johnstarich/synapse:1.31.0_20210429
+    image: johnstarich/synapse:latest  # IMPORTANT: Replace ':latest' with a stable version of Synapse.
     ports:
     - "8008:8008"
     environment:
