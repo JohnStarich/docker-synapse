@@ -1,4 +1,4 @@
-FROM matrixdotorg/synapse:v1.34.0
+FROM matrixdotorg/synapse:v1.35.1
 
 # Install shared_secret_auth, which can be enabled if desired
 RUN apt-get update && \
