@@ -50,9 +50,10 @@ services:
     #- CONFIG_media_store_path=/data/media
     #- CONFIG_app_service_config_files.0=/bridge/slack-bridge.yaml
     #
-    ## SharedSecretAuthenticator is built-in and can be enabled if you like: https://github.com/devture/matrix-synapse-shared-secret-auth
-    #- CONFIG_password_providers.0.module=shared_secret_authenticator.SharedSecretAuthenticator
-    #- CONFIG_password_providers.0.config.sharedSecret=
+    ## SharedSecretAuthProvider is built-in and can be enabled if you like: https://github.com/devture/matrix-synapse-shared-secret-auth#configuring
+    #- CONFIG_modules.0.module=shared_secret_authenticator.SharedSecretAuthProvider
+    #- CONFIG_modules.0.config.shared_secret=
+    #- CONFIG_modules.0.config.m_login_password_support_enabled=true
     #
     secrets:
     # Signing key file provided as a Docker secret. Unfortunately not declaratively generated.

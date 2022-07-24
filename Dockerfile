@@ -7,8 +7,10 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/* /var/lib/cache/* /var/lib/log/*
 RUN pip install git+https://github.com/devture/matrix-synapse-shared-secret-auth
 # To enable shared secret auth, set the following:
-# CONFIG_password_providers.0.module=shared_secret_authenticator.SharedSecretAuthenticator
-# CONFIG_password_providers.0.config.sharedSecret=
+# CONFIG_modules.0.module=shared_secret_authenticator.SharedSecretAuthProvider
+# CONFIG_modules.0.config.shared_secret=
+# CONFIG_modules.0.config.m_login_password_support_enabled=true
+# Full docs located here: https://github.com/devture/matrix-synapse-shared-secret-auth#configuring
 
 RUN mkdir -p /data /config
 RUN SYNAPSE_SERVER_NAME=my.matrix.host SYNAPSE_REPORT_STATS=no /start.py generate && \
