@@ -1,4 +1,4 @@
-FROM matrixdotorg/synapse:v1.63.1
+FROM matrixdotorg/synapse:v1.70.1
 
 # Install shared_secret_auth, which can be enabled if desired
 RUN apt-get update && \
@@ -18,7 +18,7 @@ RUN SYNAPSE_SERVER_NAME=my.matrix.host SYNAPSE_REPORT_STATS=no /start.py generat
 # Couldn't find a way to auto-generate the container flavor of this config, so just copy it in.
 COPY ./log.template.config /config/log.template.config
 
-COPY --from=johnstarich/env2config:v0.1.2 /env2config /
+COPY --from=johnstarich/env2config:v0.1.6 /env2config /
 ENV E2C_CONFIGS=config,log
 
 ENV LOG_OPTS_FILE=/config/log.config
